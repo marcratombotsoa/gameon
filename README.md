@@ -1,2 +1,2 @@
 # gameon
-Card
+Game Card & Video games collection
