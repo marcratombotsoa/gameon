@@ -23,6 +23,12 @@ public class ApplicationRunner {
 
 	private CardService cardService = new CardServiceImpl();
 
+	/**
+	 * Runs the program command prompt<br/>
+	 * - Generates the card game collection <br/>
+	 * - Prints them on the standard output <br/>
+	 * - Read the command from the standard output <br/>
+	 */
 	public void run() {
 		Scanner scanner = new Scanner(System.in);;
 		String command = null;

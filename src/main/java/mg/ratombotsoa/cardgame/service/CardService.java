@@ -7,7 +7,7 @@ import mg.ratombotsoa.cardgame.model.Card;
 public interface CardService {
 
 	/**
-	 * Shuffles the collection of cards in randome order and return a copy of the shuffled collection
+	 * Shuffles the collection of cards in random order and return a copy of the shuffled collection
 	 * @param cards
 	 * @return
 	 */
