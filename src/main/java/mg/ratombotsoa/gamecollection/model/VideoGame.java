@@ -1,5 +1,7 @@
 package mg.ratombotsoa.gamecollection.model;
 
+import mg.ratombotsoa.gamecollection.util.DateUtil;
+
 public class VideoGame extends AbstractEntity {
 
 	/**
@@ -32,6 +34,7 @@ public class VideoGame extends AbstractEntity {
 
 	@Override
 	public String toString() {
-		return "VideoGame [publisher=" + publisher + ", console=" + console + ", getName()=" + getName() + "]";
+		return "\n{publisher:" + publisher + ", console:" + console.getName() + ", name:" + getName() + ", release date: "
+				+ DateUtil.formatDate(getReleaseDate()) + "}";
 	}
 }

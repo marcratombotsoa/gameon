@@ -1,6 +1,8 @@
 package mg.ratombotsoa.gamecollection.model;
 
-public class Console extends AbstractEntity {
+import mg.ratombotsoa.gamecollection.util.DateUtil;
+
+public class Console extends AbstractEntity implements Comparable<Console> {
 
 	/**
 	 * 
@@ -28,5 +30,16 @@ public class Console extends AbstractEntity {
 
 	public void setNumberOfBits(Integer numberOfBits) {
 		this.numberOfBits = numberOfBits;
+	}
+
+	@Override
+	public String toString() {
+		return "\n{manufacturer:" + manufacturer + ", name:" + getName() + ", release date:"
+				+ DateUtil.formatDate(getReleaseDate()) + "}";
+	}
+
+	@Override
+	public int compareTo(Console o) {
+		return this.getName().compareTo(o.getName());
 	}
 }
