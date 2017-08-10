@@ -3,15 +3,32 @@ package mg.ratombotsoa.gamecollection.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class AbstractEntity implements Serializable {
+import javax.persistence.Column;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@MappedSuperclass
+public abstract class AbstractEntity implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -4592805811061079867L;
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id", unique = true, nullable = false)
 	private Long id;
+	
+	@Column(name = "name", nullable = false)
 	private String name;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+    @Column(name = "release_date", nullable = false)
 	private Date releaseDate;
 	
 	public AbstractEntity() {

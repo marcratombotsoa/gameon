@@ -6,14 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Component;
 
 import mg.ratombotsoa.gamecollection.model.Console;
 import mg.ratombotsoa.gamecollection.model.VideoGame;
-import mg.ratombotsoa.gamecollection.service.ConsoleService;
-import mg.ratombotsoa.gamecollection.service.GameService;
-import mg.ratombotsoa.gamecollection.util.comparator.CustomGameComparator;
-import mg.ratombotsoa.gamecollection.util.comparator.ReleaseDateComparator;
+import mg.ratombotsoa.gamecollection.repository.ConsoleRepository;
+import mg.ratombotsoa.gamecollection.repository.VideoGameRepository;
 
 @Component
 public class CommandLineApplicationRunner implements CommandLineRunner {
@@ -24,30 +24,26 @@ public class CommandLineApplicationRunner implements CommandLineRunner {
 	private List<Console> consoles;
 	
 	@Autowired
-	private ConsoleService consoleService;
-	
-	@Autowired
 	private List<VideoGame> games;
 	
 	@Autowired
-	private GameService gameService;
+	private ConsoleRepository consoleDao;
+	
+	@Autowired
+	private VideoGameRepository gameDao;
 	
 	@Override
 	public void run(String... args) throws Exception {
-		sortConsoles();
-		sortGames();
+		consoleDao.saveAll(consoles);
+		gameDao.saveAll(games);
+		
+		List<Console> releaseDatesortedConsoles = consoleDao.findAll(Sort.by(Direction.DESC, "releaseDate"));
+		LOGGER.debug("List of consoles sorted by descending release date: {}", releaseDatesortedConsoles);
+		
+		List<VideoGame> sortedGames = gameDao.findAll(Sort.by(Direction.ASC, "console.name", "releaseDate"));
+		LOGGER.debug("List of video games sorted by console and then by release date: {}", sortedGames);
+		
+		LOGGER.debug("Search game by name: {}", gameDao.findByName("NBA 2K17"));
+		LOGGER.debug("Search console by name: {}", consoleDao.findByName("Playstation 4"));
 	}
-	
-	private void sortConsoles() {
-		LOGGER.debug("List of consoles: {}", consoles);
-		consoleService.sortConsoles(consoles, new ReleaseDateComparator(), true);
-		LOGGER.debug("List of consoles after sorting by release date: {}", consoles);
-	}
-	
-	private void sortGames() {
-		LOGGER.debug("List of games: {}", games);
-		gameService.sortGames(games, new CustomGameComparator(), true);
-		LOGGER.debug("List of games after sorting by console then by release date: {}", games);
-	}
-	
 }

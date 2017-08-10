@@ -1,7 +1,13 @@
 package mg.ratombotsoa.gamecollection.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import mg.ratombotsoa.gamecollection.util.DateUtil;
 
+@Entity
+@Table(name = "console")
 public class Console extends AbstractEntity implements Comparable<Console> {
 
 	/**
@@ -9,7 +15,10 @@ public class Console extends AbstractEntity implements Comparable<Console> {
 	 */
 	private static final long serialVersionUID = -6484393573509793574L;
 	
+	@Column(name = "manufacturer", nullable = false, length = 500)
 	private String manufacturer;
+	
+	@Column(name = "number_bits")
 	private Integer numberOfBits;
 	
 	public Console() {
