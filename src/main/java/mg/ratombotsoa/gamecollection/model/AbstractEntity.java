@@ -3,7 +3,7 @@ package mg.ratombotsoa.gamecollection.model;
 import java.io.Serializable;
 import java.util.Date;
 
-public class AbstractEntity implements Serializable {
+public abstract class AbstractEntity implements Serializable {
 
 	/**
 	 * 
