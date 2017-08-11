@@ -2,6 +2,7 @@ package mg.ratombotsoa.gamecollection.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,4 +14,6 @@ public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 	
 	@Query("select v from VideoGame v where v.console.id = ?1")
 	List<VideoGame> findAllByConsoleId(Long id);
+
+	List<VideoGame> findAllByNameContaining(String criteria, Sort sort);
 }

@@ -16,5 +16,4 @@ public class GameServiceImpl implements GameService {
 	public void sortGames(List<VideoGame> games, Comparator<VideoGame> comparator, boolean ascending) {
 		SortUtil.sortCollections(games, comparator, ascending);
 	}
-
 }

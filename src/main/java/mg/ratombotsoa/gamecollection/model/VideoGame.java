@@ -21,7 +21,7 @@ public class VideoGame extends AbstractEntity {
 	private String publisher;
 	
 	@ManyToOne
-	@JoinColumn(name = "console_id")
+	@JoinColumn(name = "console_id", nullable = false)
 	private Console console;
 	
 	public VideoGame() {
