@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<img th:src="@{/img/sniper.png}" />
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>

@@ -11,6 +11,8 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @MappedSuperclass
 public abstract class AbstractEntity implements Serializable {
 
@@ -27,8 +29,9 @@ public abstract class AbstractEntity implements Serializable {
 	@Column(name = "name", nullable = false)
 	private String name;
 	
-	@Temporal(TemporalType.TIMESTAMP)
+	@Temporal(TemporalType.DATE)
     @Column(name = "release_date", nullable = false)
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date releaseDate;
 	
 	public AbstractEntity() {

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Console Management</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<form class="form-horizontal" th:action="@{/console/search}" method="post">
+			<div class="panel row">
+				<div class="col-sm-2">
+					<input type="text" class="form-control" 
+						th:value="${criteria}" name="criteria" placeholder="Search by name"
+						onkeyup="event.keyCode == 13 ? this.form.submit() : null"/>
+				</div>
+  				<div class="col-sm-2">
+  					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span> Search
+					</button>
+  				</div>
+			</div>
+		</form>
+		<div class="panel panel-default">
+			<a href="#" class="btn btn-default" th:href="@{/console/create}"
+				style="margin: 20px;">
+				<span class="glyphicon glyphicon-plus"></span>
+				Add new console
+			</a>
+			<div class="panel-heading">
+				List of consoles
+			</div>
+			<div class="alert alert-danger" th:if="${errorMessage != null}" th:text="${errorMessage}">
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Manufacturer</th>
+							<th>Release date</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="console : ${consoles}">
+							<td th:text="${console.name}"></td>
+							<td th:text="${console.manufacturer}"></td>
+							<td th:text="${#dates.format(console.releaseDate, 'dd MMMM yyyy')}"></td>
+							<td>
+								<a class="btn btn-default" th:href="@{/console/detail} + '/' + ${console.id}">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<a th:href="@{/console/delete} + '/' + ${console.id}" class="btn btn-danger">
+									<span class="glyphicon glyphicon-remove-sign"></span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>
