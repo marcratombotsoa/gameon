@@ -10,12 +10,12 @@ public class DateUtil {
 	private static final String FORMAT_PATTERN = "MMM/dd/yyyy";
 	
 	public static Date parseDate(String date) {
-			try {
-				return DateFormat.getDateInstance(DateFormat.SHORT).parse(date);
-			} catch (ParseException e) {
-				e.printStackTrace();
-				return null;
-			}
+		try {
+			return DateFormat.getDateInstance(DateFormat.SHORT).parse(date);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 	
 	public static String formatDate(Date date) {
