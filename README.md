@@ -8,3 +8,4 @@ Game Card & Video games collection
 ## Setup
  Clone the repository, go to the project folder and run the command:
  - $ mvn spring-boot:run
+ - Go to the browser and navigate to: http://localhost:8080
