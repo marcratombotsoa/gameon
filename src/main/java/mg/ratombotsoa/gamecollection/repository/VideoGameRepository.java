@@ -16,4 +16,7 @@ public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 	List<VideoGame> findAllByConsoleId(Long id);
 
 	List<VideoGame> findAllByNameContaining(String criteria, Sort sort);
+	
+	@Query("select v from VideoGame v left join fetch v.users where v.name = ?1")
+	VideoGame findByNameAndFetchUsers(String name);
 }

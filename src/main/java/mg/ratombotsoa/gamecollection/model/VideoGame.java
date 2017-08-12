@@ -1,8 +1,13 @@
 package mg.ratombotsoa.gamecollection.model;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -24,6 +29,9 @@ public class VideoGame extends AbstractEntity {
 	@JoinColumn(name = "console_id", nullable = false)
 	private Console console;
 	
+	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "games")
+	private Collection<User> users;
+	
 	public VideoGame() {
 		super();
 	}
@@ -42,6 +50,17 @@ public class VideoGame extends AbstractEntity {
 
 	public void setConsole(Console console) {
 		this.console = console;
+	}
+	
+	public Collection<User> getUsers() {
+		if (users == null) {
+			users = new ArrayList<User>();
+		}
+		return users;
+	}
+
+	public void setUsers(Collection<User> users) {
+		this.users = users;
 	}
 
 	@Override

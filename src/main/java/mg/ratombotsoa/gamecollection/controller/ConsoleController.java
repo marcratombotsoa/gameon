@@ -24,6 +24,9 @@ import mg.ratombotsoa.gamecollection.service.ConsoleService;
 @RequestMapping(value = "/console")
 public class ConsoleController {
 
+	private static final String CONSOLE_LIST = "console/console";
+	private static final String CONSOLE_DETAIL = "console/consoleDetail";
+	
 	@Autowired
 	private ConsoleRepository consoleDao;
 	
@@ -34,7 +37,7 @@ public class ConsoleController {
 	public String getConsoleList(ModelMap map) {
 		List<Console> consoles = consoleDao.findAll(Sort.by(Direction.DESC, "releaseDate"));
 		map.put("consoles", consoles);
-		return "console";
+		return CONSOLE_LIST;
 	}
 	
 	@PostMapping(value = "/search")
@@ -42,14 +45,14 @@ public class ConsoleController {
 		List<Console> consoles = consoleDao.findAllByNameContaining(criteria);
 		map.put("consoles", consoles);
 		map.put("criteria", criteria);
-		return "console";
+		return CONSOLE_LIST;
 	}
 	
 	@GetMapping(value = "/detail/{id}")
 	public String goToDetail(ModelMap map, @PathVariable(value = "id", required = true) Long consoleId) {
 		Optional<Console> console = consoleDao.findById(consoleId);
 		map.put("console", console.get());
-		return "consoleDetail";
+		return CONSOLE_DETAIL;
 	}
 	
 	@GetMapping(value = "/delete/{id}")
@@ -62,13 +65,13 @@ public class ConsoleController {
 		
 		List<Console> consoles = consoleDao.findAll(Sort.by(Direction.DESC, "releaseDate"));
 		map.put("consoles", consoles);
-		return "console";
+		return CONSOLE_LIST;
 	}
 	
 	@GetMapping(value = "/create")
 	public String createConsole(ModelMap map) {
 		map.put("console", new Console());
-		return "consoleDetail";
+		return CONSOLE_DETAIL;
 	}
 	
 	@PostMapping(value = "/detail/save")
@@ -77,6 +80,6 @@ public class ConsoleController {
 		
 		List<Console> consoles = consoleDao.findAll(Sort.by(Direction.DESC, "releaseDate"));
 		map.put("consoles", consoles);
-		return "console";
+		return CONSOLE_LIST;
 	}
 }

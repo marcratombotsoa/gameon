@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Create / Update Console</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<link rel="stylesheet" th:href="@{/css/bootstrap-select.css}" />
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap-select.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/validator.min.js}"></script>
+	<script type="text/javascript">
+	$(document).ready(function(){
+		  $('#userForm').validator();
+	});
+	
+	function preSubmit() {
+		pass = $('#password').val();
+		confirmPass = $('#confirmPassword').val();
+		
+		if (pass == confirmPass) {
+			$('#userForm').submit();
+		} else {
+			alert('The passwords do not match');
+		}
+	}
+	</script>
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text="'Details of the user ' + ${user.firstName != null ? user.firstName : ''} + ' ' + ${user.name != null ? user.name : ''}">
+			</div>
+			<div class="panel-body">
+				<form id="userForm" class="form-horizontal" th:object="${user}" th:action="@{/user/detail/save}" method="post">
+				  <input type="hidden" th:field="*{id}" />
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="firstName">First name:</label>
+				    <div class="col-sm-10"> 
+				      <input type="text" class="form-control" th:field="*{firstName}" required="required" placeholder="First name">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="userName">Name:</label>
+				    <div class="col-sm-10">
+				      <input type="text" class="form-control" th:field="*{name}" required="required" placeholder="Name">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="release">Date of birth:</label>
+				    <div class="col-sm-10"> 
+				      <input type="date" class="form-control" th:field="*{birthDate}"
+				      	th:text="${#dates.format(birthDate, 'yyyy-MM-dd')}" required="required" placeholder="yyyy-MM-dd">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="nbBits">Username:</label>
+				    <div class="col-sm-10"> 
+				      <input type="text" class="form-control" required="required" th:field="*{username}">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="nbBits">Password:</label>
+				    <div class="col-sm-10"> 
+				      <input type="password" id="password" class="form-control" th:field="*{password}">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="nbBits">Confirm password:</label>
+				    <div class="col-sm-10"> 
+				      <input type="password" id="confirmPassword" class="form-control" th:field="*{password}">
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="control-label col-sm-2" for="nbBits">Video games:</label>
+				    <div class="col-sm-10">
+						<select class="selectpicker" multiple>
+							<option>FIFA 18</option>
+							<option>Tekken 7</option>
+							<option>NBA 2K17</option>
+						</select>
+					</div>
+				  </div>
+				  <div class="form-group"> 
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button type="button" class="btn btn-default" onclick="preSubmit();">Save</button>
+				      <a class="btn btn-danger" th:href="@{/user}">Cancel</a>
+				    </div>
+				  </div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>

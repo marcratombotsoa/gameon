@@ -23,6 +23,9 @@ import mg.ratombotsoa.gamecollection.repository.VideoGameRepository;
 @RequestMapping(value = "/game")
 public class GameController {
 
+	private static final String GAME_LIST = "game/game";
+	private static final String GAME_DETAIL = "game/gameDetail";
+	
 	@Autowired
 	private VideoGameRepository gameDao;
 	
@@ -33,14 +36,14 @@ public class GameController {
 	public String getGameList(ModelMap map) {
 		List<VideoGame> games = gameDao.findAll(Sort.by(Direction.ASC, "console.name", "releaseDate"));
 		map.put("games", games);
-		return "game";
+		return GAME_LIST;
 	}
 	
 	@GetMapping(value = "/create")
 	public String createGame(ModelMap map) {
 		map.put("game", new VideoGame());
 		map.put("consoles", consoleDao.findAll(Sort.by("name")));
-		return "gameDetail";
+		return GAME_DETAIL;
 	}
 	
 	@PostMapping(value = "/search")
@@ -48,7 +51,7 @@ public class GameController {
 		List<VideoGame> games = gameDao.findAllByNameContaining(criteria, Sort.by(Direction.ASC, "console.name", "releaseDate"));
 		map.put("games", games);
 		map.put("criteria", criteria);
-		return "game";
+		return GAME_LIST;
 	}
 	
 	@GetMapping(value = "/detail/{id}")
@@ -56,7 +59,7 @@ public class GameController {
 		Optional<VideoGame> game = gameDao.findById(gameId);
 		map.put("consoles", consoleDao.findAll(Sort.by("name")));
 		map.put("game", game.get());
-		return "gameDetail";
+		return GAME_DETAIL;
 	}
 	
 	@PostMapping(value = "/detail/save")
@@ -65,7 +68,7 @@ public class GameController {
 		
 		List<VideoGame> games = gameDao.findAll(Sort.by(Direction.ASC, "console.name", "releaseDate"));
 		map.put("games", games);
-		return "game";
+		return GAME_LIST;
 	}
 	
 	@GetMapping(value = "/delete/{id}")
@@ -73,6 +76,6 @@ public class GameController {
 		gameDao.deleteById(gameId);
 		List<VideoGame> games = gameDao.findAll(Sort.by(Direction.ASC, "console.name", "releaseDate"));
 		map.put("games", games);
-		return "game";
+		return GAME_LIST;
 	}
 }
