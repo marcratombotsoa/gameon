@@ -2,6 +2,7 @@ package mg.ratombotsoa.gamecollection.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -18,8 +19,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
 
 @Entity
 @Table(name = "user")
@@ -59,6 +65,12 @@ public class User implements Serializable {
 			@JoinColumn(name = "game_id", nullable = false, updatable = false)
 		})
 	private List<VideoGame> games;
+	
+	@Transient
+	private List<Long> selectedGameIds = Lists.newArrayList();
+	
+	@Transient
+	private String transientPassword;
 
 	public User(Long id, String username) {
 		super();
@@ -131,6 +143,32 @@ public class User implements Serializable {
 
 	public void setGames(List<VideoGame> games) {
 		this.games = games;
+	}
+	
+	public List<Long> getSelectedGameIds() {
+		return selectedGameIds;
+	}
+
+	public void setSelectedGameIds(List<Long> selectedGameIds) {
+		this.selectedGameIds = selectedGameIds;
+	}
+
+	public String getTransientPassword() {
+		return transientPassword;
+	}
+
+	public void setTransientPassword(String transientPassword) {
+		this.transientPassword = transientPassword;
+	}
+
+	public void initSelectedGames() {
+		Collection<Long> ids = Collections2.transform(getGames(), new Function<VideoGame, Long>() {
+			@Override
+			public Long apply(VideoGame game) {
+				return game.getId();
+			}
+		});
+		this.selectedGameIds = Lists.newArrayList(ids);
 	}
 
 	@Override

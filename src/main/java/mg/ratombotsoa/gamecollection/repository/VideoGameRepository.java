@@ -19,4 +19,6 @@ public interface VideoGameRepository extends JpaRepository<VideoGame, Long> {
 	
 	@Query("select v from VideoGame v left join fetch v.users where v.name = ?1")
 	VideoGame findByNameAndFetchUsers(String name);
+
+	List<VideoGame> findAllByUsersId(Long id);
 }
