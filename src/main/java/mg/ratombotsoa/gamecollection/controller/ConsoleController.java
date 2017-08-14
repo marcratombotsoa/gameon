@@ -42,7 +42,7 @@ public class ConsoleController {
 	
 	@PostMapping(value = "/search")
 	public String searchConsole(ModelMap map, @RequestParam String criteria) {
-		List<Console> consoles = consoleDao.findAllByNameContaining(criteria);
+		List<Console> consoles = consoleDao.findAllByNameContaining(criteria, Sort.by(Direction.DESC, "releaseDate"));
 		map.put("consoles", consoles);
 		map.put("criteria", criteria);
 		return CONSOLE_LIST;

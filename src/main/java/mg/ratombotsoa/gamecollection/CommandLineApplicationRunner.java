@@ -1,5 +1,6 @@
 package mg.ratombotsoa.gamecollection;
 
+import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -36,11 +37,24 @@ public class CommandLineApplicationRunner implements CommandLineRunner {
 		consoleDao.saveAll(consoles);
 		gameDao.saveAll(games);
 		
-		User user = new UserBuilder().withFirstName("Kevin")
+		User user1 = new UserBuilder().withFirstName("Kevin")
 			.withName("Durant")
 			.withUsername("kd35")
+			.withBirthDate(new Date(591541436000L))
+			// Password encrypted with BCryptPasswordEncoder
+			// Default Password : password
+			.withPassword("$2a$04$QBbAUYZDF7K345pxojD41eNMiVEBWaDBUhBXkm5ikVIsmoH7ukoNK")
 			.build();
 		
-		userDao.save(user);
+		userDao.save(user1);
+		
+		User user2 = new UserBuilder().withFirstName("Kobe")
+			.withName("Bryant")
+			.withUsername("blackmamba")
+			.withBirthDate(new Date(272725436000L))
+			.withPassword("$2a$04$QBbAUYZDF7K345pxojD41eNMiVEBWaDBUhBXkm5ikVIsmoH7ukoNK")
+			.build();
+			
+			userDao.save(user2);
 	}
 }
