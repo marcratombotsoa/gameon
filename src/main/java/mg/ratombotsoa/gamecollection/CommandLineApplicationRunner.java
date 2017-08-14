@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import mg.ratombotsoa.gamecollection.model.Console;
@@ -32,6 +33,9 @@ public class CommandLineApplicationRunner implements CommandLineRunner {
 	@Autowired
 	private UserRepository userDao;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	@Override
 	public void run(String... args) throws Exception {
 		consoleDao.saveAll(consoles);
@@ -41,9 +45,7 @@ public class CommandLineApplicationRunner implements CommandLineRunner {
 			.withName("Durant")
 			.withUsername("kd35")
 			.withBirthDate(new Date(591541436000L))
-			// Password encrypted with BCryptPasswordEncoder
-			// Default Password : password
-			.withPassword("$2a$04$QBbAUYZDF7K345pxojD41eNMiVEBWaDBUhBXkm5ikVIsmoH7ukoNK")
+			.withPassword(passwordEncoder.encode("password"))
 			.build();
 		
 		userDao.save(user1);
@@ -52,7 +54,7 @@ public class CommandLineApplicationRunner implements CommandLineRunner {
 			.withName("Bryant")
 			.withUsername("blackmamba")
 			.withBirthDate(new Date(272725436000L))
-			.withPassword("$2a$04$QBbAUYZDF7K345pxojD41eNMiVEBWaDBUhBXkm5ikVIsmoH7ukoNK")
+			.withPassword(passwordEncoder.encode("password"))
 			.build();
 			
 			userDao.save(user2);

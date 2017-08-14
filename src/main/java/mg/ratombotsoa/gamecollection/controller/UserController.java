@@ -58,7 +58,14 @@ public class UserController {
 	
 	@PostMapping(value = "/detail/save")
 	public String saveUser(ModelMap map, @ModelAttribute User user) {
+
+		boolean isNewUser = user.getId() == null;
 		userService.saveUser(user);
+		
+		if (isNewUser) {
+			return "redirect:/login?newuser=true";
+		}
+		
 		List<User> users = userDao.findAll(Sort.by(Direction.ASC, "name", "firstName"));
 		map.put("users", users);
 		return USER_LIST;

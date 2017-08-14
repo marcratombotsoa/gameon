@@ -2,6 +2,7 @@ package mg.ratombotsoa.gamecollection.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import mg.ratombotsoa.gamecollection.model.Console;
 import mg.ratombotsoa.gamecollection.model.VideoGame;
@@ -9,9 +10,14 @@ import mg.ratombotsoa.gamecollection.model.builder.ConsoleBuilder;
 import mg.ratombotsoa.gamecollection.model.builder.VideoGameBuilder;
 import static mg.ratombotsoa.gamecollection.util.DateUtil.parseDate;
 
+import java.security.SecureRandom;
+
 @Configuration
 public class GameConfiguration {
 
+	private static final int PASSWORD_STRENGTH = 4;
+	private static final SecureRandom RANDOM = new SecureRandom();
+	
 	/* Console Beans Definition */
 	@Bean
 	public Console xboxOne() {
@@ -73,5 +79,11 @@ public class GameConfiguration {
 	public VideoGame tekken7() {
 		return new VideoGameBuilder().withName("Tekken 7").withPublisher("Bandai Namco Entertainment").withConsole(ps4())
 				.withReleaseDate(parseDate("6/2/17")).build();
+	}
+	
+	@Bean
+	public BCryptPasswordEncoder passwordEncoder() {
+		BCryptPasswordEncoder encoder = new BCryptPasswordEncoder(PASSWORD_STRENGTH, RANDOM);
+		return encoder;
 	}
 }

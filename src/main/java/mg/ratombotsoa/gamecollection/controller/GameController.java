@@ -73,6 +73,7 @@ public class GameController {
 	
 	@GetMapping(value = "/delete/{id}")
 	public String deleteGame(ModelMap map, @PathVariable(value = "id", required = true) Long gameId) {
+		gameDao.unlinkGameFromUsers(gameId);
 		gameDao.deleteById(gameId);
 		List<VideoGame> games = gameDao.findAll(Sort.by(Direction.ASC, "console.name", "releaseDate"));
 		map.put("games", games);

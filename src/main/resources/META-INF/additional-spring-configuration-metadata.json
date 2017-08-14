@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.security.user.query",
+    "type": "java.lang.String",
+    "description": "Native query to be used to retrieve user trying to log in"
+  },
+  {
+    "name": "spring.security.role.query",
+    "type": "java.lang.String",
+    "description": "Native query to retrieve roles of a user"
+  }
+]}

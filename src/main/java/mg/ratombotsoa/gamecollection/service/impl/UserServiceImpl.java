@@ -16,6 +16,9 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private UserRepository userDao;
 	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+	
 	@Override
 	public User loadUserWithGames(Long userId) {
 		User user = userDao.findByIdAndFetchGames(userId);
@@ -40,7 +43,7 @@ public class UserServiceImpl implements UserService {
 	
 	private void encryptPassword(User user) {
 		if (StringUtils.isNotEmpty(user.getTransientPassword())) {
-			user.setPassword(new BCryptPasswordEncoder().encode(user.getTransientPassword()));
+			user.setPassword(passwordEncoder.encode(user.getTransientPassword()));
 		}
 	}
 
