@@ -34,9 +34,10 @@
 				List of games
 			</div>
 			<div class="panel-body">
-				<table class="table table-hover">
+				<table class="table table-hover game-table">
 					<thead>
 						<tr>
+							<th></th>
 							<th>Name</th>
 							<th>Console</th>
 							<th>Publisher</th>
@@ -46,15 +47,22 @@
 					</thead>
 					<tbody>
 						<tr th:each="game : ${games}">
+							<td>
+								<img th:src="@{/game/img/} + ${game.id}" width="75" style="min-height: 50px;"
+									class="center-block img-thumbnail" />
+							</td>
 							<td th:text="${game.name}"></td>
 							<td th:text="${game.console.name}"></td>
 							<td th:text="${game.publisher}"></td>
 							<td th:text="${#dates.format(game.releaseDate, 'dd MMMM yyyy')}"></td>
 							<td>
-								<a class="btn btn-default" th:href="@{/game/detail} + '/' + ${game.id}">
+								<a class="btn btn-default" title="Edit the game" th:href="@{/game/detail} + '/' + ${game.id}">
 									<span class="glyphicon glyphicon-pencil"></span>
 								</a>
-								<a th:href="@{/game/delete} + '/' + ${game.id}" class="btn btn-danger">
+								<a class="btn btn-default" title="Change the cover photo" th:href="@{/game/cover} + '/' + ${game.id}">
+									<span class="glyphicon glyphicon-cloud-upload"></span>
+								</a>
+								<a th:href="@{/game/delete} + '/' + ${game.id}" title="Delete the game" class="btn btn-danger">
 									<span class="glyphicon glyphicon-remove-sign"></span>
 								</a>
 							</td>
