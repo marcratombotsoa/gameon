@@ -6,12 +6,27 @@
 	<link rel="stylesheet" type="text/css"
 		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
 	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$('#userlink').val(window.location.href);
+		});
+		
+		function copyToClipboard() {
+			document.getElementById('userlink').select();
+			document.execCommand("copy", false, null);
+		}
+	</script>
 </head>
 <body>
 	<div th:replace="fragments/menu::navMenu"></div>
 	<div>
 		<div class="panel panel-default">
-			<div class="panel-heading" th:text="${user} + ' - List of games'"></div>
+			<div class="panel-heading">
+				<span th:text="${user} + ' - List of games'" style="margin-right: 20px"></span>
+				<input type="text" style="display:none;" id="userlink" readonly="readonly" />
+				<button class="btn btn-primary" onclick="copyToClipboard()">Copy link to clipboard</button>
+			</div>
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-sm-5 game-info" th:each="game : ${games}">
