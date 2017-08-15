@@ -26,3 +26,31 @@
 .game-table td {
      vertical-align: middle !important;
 }
+
+.game-info {
+	box-shadow: 2px 3px;
+    border: 1px solid rgba(220,200,255,0.8);
+    margin: 20px;
+    height: 300px;
+    background: rgba(210,210,250,0.3);
+}
+
+.game-detail-table {
+	height: 100%;
+	width: 100%;
+}
+
+.game-detail-table td {
+	text-align: left;
+}
+
+.game-title {
+	font-family: verdana;
+    font-size: 20px;
+    font-weight: 900;
+}
+
+.game-console-title {
+	font-size: 16px;
+    font-weight: 500;
+}

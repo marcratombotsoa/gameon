@@ -50,7 +50,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.headers().frameOptions().disable()
 		.and()
 			.authorizeRequests()
-			.antMatchers("/login", "/h2/**", "/access-denied", "/user/create", "/user/detail/save").permitAll()
+			.antMatchers("/login", "/h2/**", "/access-denied", "/user/create", "/user/detail/save"
+					, "/user/collection/**", "/game/img/**").permitAll()
 			.antMatchers("/console/**", "/game/**", "/", "/home", "/user/**").authenticated()
 		.and()
 			.logout()

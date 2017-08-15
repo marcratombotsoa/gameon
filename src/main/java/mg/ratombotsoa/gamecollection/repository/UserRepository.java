@@ -1,5 +1,7 @@
 package mg.ratombotsoa.gamecollection.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -20,5 +22,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 	@Transactional
 	@Modifying
 	@Query(value = "insert into user_game (game_id, user_id) values (?1, ?2)", nativeQuery = true)
-	void linkUserGames(Long gameId, Long userId);	
+	void linkUserGames(Long gameId, Long userId);
+	
+	Optional<User> findByUsername(String username);
 }

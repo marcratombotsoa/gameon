@@ -32,7 +32,10 @@
 							<td th:text="${user.username}"></td>
 							<td th:text="${#dates.format(user.birthDate, 'dd MMMM yyyy')}"></td>
 							<td>
-								<a class="btn btn-default" th:if="${#authentication.name.equals(user.username)}" th:href="@{/user/detail} + '/' + ${user.id}">
+								<a class="btn btn-default" title="View games" th:href="@{/user/collection} + '/' + ${#authentication.name}">
+									<span class="glyphicon glyphicon-eye-open"></span>
+								</a>
+								<a class="btn btn-default" title="Edit profile" th:if="${#authentication.name.equals(user.username)}" th:href="@{/user/detail} + '/' + ${user.id}">
 									<span class="glyphicon glyphicon-pencil"></span>
 								</a>
 							</td>

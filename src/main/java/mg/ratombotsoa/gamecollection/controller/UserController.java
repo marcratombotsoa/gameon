@@ -1,6 +1,9 @@
 package mg.ratombotsoa.gamecollection.controller;
 
 import java.util.List;
+import java.util.Optional;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -24,6 +27,7 @@ public class UserController {
 
 	private static final String USER_LIST = "user/user";
 	private static final String USER_DETAIL = "user/userDetail";
+	private static final String USER_COLLECTION = "user/collection";
 	
 	@Autowired
 	private UserRepository userDao;
@@ -79,6 +83,34 @@ public class UserController {
 		return USER_LIST;
 	}
 	
+	@GetMapping(value = "/collection/{username}")
+	public String goToCollection(ModelMap map, @PathVariable(value = "username", required = true) String username) {
+		Optional<User> userByName = userDao.findByUsername(username);
+		
+		if (userByName.isPresent()) {
+			User user = userService.loadUserWithGames(userByName.get().getId());
+			map.put("user", buildUserLabel(user));
+			map.put("games", user.getGames());
+			return USER_COLLECTION;
+		}
+		
+		return getUserList(map);
+	}
+	
+	private String buildUserLabel(User user) {
+		StringBuilder sb = new StringBuilder();
+		if (StringUtils.isNotEmpty(user.getFirstName())) {
+			sb.append(user.getFirstName());
+			sb.append(" ");
+		}
+		
+		if (StringUtils.isNotEmpty(user.getName())) {
+			sb.append(user.getName());
+		}
+		
+		return sb.toString();
+	}
+
 	private List<VideoGame> loadGames() {
 		return gameDao.findAll(Sort.by("name", "console.name"));
 	}
