@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title th:text="${user} + ' - Game Collections'"></title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text="${user} + ' - List of games'"></div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-5 game-info" th:each="game : ${games}">
+						<table class="game-detail-table">
+							<tr>
+								<td width="40%">
+									<img th:src="@{/game/img/} + ${game.id}" width="200" style="min-height: 100px;"
+										class="img-thumbnail" />
+								</td>
+								<td width="60%">
+									<div class="game-title" th:text="${game.name}"></div>
+									<div class="game-console-title" th:text="'Published by ' + ${game.publisher}"></div>
+									<div class="game-console-title" th:text="'Console: ' + ${game.console.name}"></div>
+									<div class="game-console-title" th:text="'Released on ' + ${#dates.format(game.releaseDate, 'dd MMMM yyyy')}"></div>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>

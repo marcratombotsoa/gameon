@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Connect to Game On</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/login.css}" />
+</head>
+<body>
+	<div class="login">
+		<h1>Game On - Login</h1>
+		<form method="post">
+			<input type="text" name="username" placeholder="Username" required="required" />
+			<input type="password" name="password" placeholder="Password" required="required" />
+			<button type="submit" class="btn btn-primary btn-block btn-large">Login</button>
+		</form>
+		<div style="margin: 10px;" class="alert alert-danger" th:if="${param.error}">
+			<strong>Error: </strong> Wrong user name / password. Please try again
+		</div>
+		<div style="margin: 10px;" class="alert alert-success" th:if="${param.newuser}">
+			<strong>The user has been created successfully. </strong> You can now login with your new account
+		</div>
+		<div style="margin: 10px;">
+			<a th:href="@{/user/create}" class="btn-link pull-right">No account yet? Register</a>
+		</div>
+	</div>
+</body>
+</html>

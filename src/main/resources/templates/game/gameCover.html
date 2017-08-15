@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Change the cover photo of the game</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<div class="panel panel-default">
+			<div class="panel-heading" th:text="'Cover Photo of ' + ${game.name}">
+			</div>
+			<div class="panel-body">
+				<form class="form-horizontal" th:action="@{/game/detail/upload}" method="post"
+					enctype="multipart/form-data">
+				  <input type="hidden" name="gameId" th:value="${game.id}" />
+				  <div class="form-group">
+				    <label class="control-label col-sm-2">Cover:</label>
+				    <div class="col-sm-10">
+				      <input type="file" name="cover" class="upload-img" required="required" placeholder="Cover photo">
+				    </div>
+				  </div>
+				  <div class="form-group"> 
+				    <div class="col-sm-offset-2 col-sm-10">
+				      <button type="submit" class="btn btn-default">Upload</button>
+				      <a class="btn btn-danger" th:href="@{/game}">Back</a>
+				    </div>
+				  </div>
+				</form>
+				<div class="alert alert-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
+			</div>
+		</div>
+		<div class="cover-panel center-block" th:if="${imageExists}">
+			<a class="delete-img" title="Remove the game cover" th:href="@{/game/cover/delete/} + ${game.id}">
+				<span class="del-cover-btn glyphicon glyphicon-remove-sign"></span>
+			</a>
+			<img th:src="@{/game/img/} + ${game.id}" width="400" class="center-block img-thumbnail" alt="Cover photo"/>
+		</div>
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>

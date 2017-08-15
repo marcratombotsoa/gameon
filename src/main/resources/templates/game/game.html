@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="ISO-8859-1" />
+	<title>Game Management</title>
+	<link rel="stylesheet" type="text/css"
+		th:href="@{/webjars/bootstrap/3.3.7/css/bootstrap.min.css}" />
+	<link rel="stylesheet" th:href="@{/css/styles.css}" />
+</head>
+<body>
+	<div th:replace="fragments/menu::navMenu"></div>
+	<div>
+		<form class="form-horizontal" th:action="@{/game/search}" method="post">
+			<div class="panel row">
+				<div class="col-sm-2">
+					<input type="text" class="form-control" 
+						th:value="${criteria}" name="criteria" placeholder="Search by name"
+						onkeyup="event.keyCode == 13 ? this.form.submit() : null"/>
+				</div>
+  				<div class="col-sm-2">
+  					<button type="submit" class="btn btn-default">
+						<span class="glyphicon glyphicon-search"></span> Search
+					</button>
+  				</div>
+			</div>
+		</form>
+		<div class="panel panel-default">
+			<a href="#" class="btn btn-default" th:href="@{/game/create}"
+				style="margin: 20px;">
+				<span class="glyphicon glyphicon-plus"></span>
+				Add new game
+			</a>
+			<div class="panel-heading">
+				List of games
+			</div>
+			<div class="panel-body">
+				<table class="table table-hover game-table">
+					<thead>
+						<tr>
+							<th></th>
+							<th>Name</th>
+							<th>Console</th>
+							<th>Publisher</th>
+							<th>Release date</th>
+							<th>Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="game : ${games}">
+							<td>
+								<a th:href="@{/game/cover} + '/' + ${game.id}">
+									<img th:src="@{/game/img/} + ${game.id}" width="75" style="min-height: 50px;"
+										class="center-block img-thumbnail" />
+								</a>
+							</td>
+							<td th:text="${game.name}"></td>
+							<td th:text="${game.console.name}"></td>
+							<td th:text="${game.publisher}"></td>
+							<td th:text="${#dates.format(game.releaseDate, 'dd MMMM yyyy')}"></td>
+							<td>
+								<a class="btn btn-default" title="Edit the game" th:href="@{/game/detail} + '/' + ${game.id}">
+									<span class="glyphicon glyphicon-pencil"></span>
+								</a>
+								<a class="btn btn-default" title="Change the cover photo" th:href="@{/game/cover} + '/' + ${game.id}">
+									<span class="glyphicon glyphicon-cloud-upload"></span>
+								</a>
+								<a th:href="@{/game/delete} + '/' + ${game.id}" title="Delete the game" class="btn btn-danger">
+									<span class="glyphicon glyphicon-remove-sign"></span>
+								</a>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+	<div th:replace="fragments/footer::footer">&copy; 2017 Game on</div>
+</body>
+</html>
