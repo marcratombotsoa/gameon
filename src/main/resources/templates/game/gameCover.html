@@ -31,6 +31,7 @@
 				    </div>
 				  </div>
 				</form>
+				<div class="alert alert-danger" th:if="${errorMessage != null}" th:text="${errorMessage}"></div>
 			</div>
 		</div>
 		<div class="cover-panel center-block" th:if="${imageExists}">

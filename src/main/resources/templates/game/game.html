@@ -48,8 +48,10 @@
 					<tbody>
 						<tr th:each="game : ${games}">
 							<td>
-								<img th:src="@{/game/img/} + ${game.id}" width="75" style="min-height: 50px;"
-									class="center-block img-thumbnail" />
+								<a th:href="@{/game/cover} + '/' + ${game.id}">
+									<img th:src="@{/game/img/} + ${game.id}" width="75" style="min-height: 50px;"
+										class="center-block img-thumbnail" />
+								</a>
 							</td>
 							<td th:text="${game.name}"></td>
 							<td th:text="${game.console.name}"></td>

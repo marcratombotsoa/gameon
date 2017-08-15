@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.google.common.collect.Lists;
+
 import mg.ratombotsoa.gamecollection.model.VideoGame;
 import mg.ratombotsoa.gamecollection.repository.ConsoleRepository;
 import mg.ratombotsoa.gamecollection.repository.VideoGameRepository;
@@ -30,6 +32,7 @@ public class GameController {
 	private static final String GAME_LIST = "game/game";
 	private static final String GAME_DETAIL = "game/gameDetail";
 	private static final String GAME_COVER = "game/gameCover";
+	private static final List<String> ALLOWED_UPLOAD_FILE_TYPES = Lists.newArrayList("image/jpeg", "image/png"); 
 	
 	@Autowired
 	private VideoGameRepository gameDao;
@@ -103,6 +106,11 @@ public class GameController {
 
 	@PostMapping(value = "/detail/upload")
 	public String uploadCover(ModelMap map, @RequestParam("gameId") Long gameId, @RequestParam("cover") MultipartFile file) {
+		if (!ALLOWED_UPLOAD_FILE_TYPES.contains(file.getContentType())) {
+			map.put("errorMessage", "You must upload a jpeg or png file.");
+			return goToCoverUpload(map, gameId);
+		}
+		
 		try {
 			gameService.storeCover(file, gameId);
 		} catch (IOException e) {
