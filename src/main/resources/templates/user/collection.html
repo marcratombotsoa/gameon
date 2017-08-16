@@ -11,10 +11,11 @@
 		$(document).ready(function() {
 			$('#userlink').val(window.location.href);
 		});
-		
+	
 		function copyToClipboard() {
-			document.getElementById('userlink').select();
-			document.execCommand("copy", false, null);
+			$('#userlink').val(window.location.href);
+			$('#userlink').select();
+			document.execCommand("copy");
 		}
 	</script>
 </head>
@@ -24,7 +25,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<span th:text="${user} + ' - List of games'" style="margin-right: 20px"></span>
-				<input type="text" style="display:none;" id="userlink" readonly="readonly" />
+				<input type="text" id="userlink" style="width:350px;" class="input-sm" readonly="readonly" />
 				<button class="btn btn-primary" onclick="copyToClipboard()">Copy link to clipboard</button>
 			</div>
 			<div class="panel-body">
